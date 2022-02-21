@@ -10,24 +10,49 @@ import { Modal } from 'react-responsive-modal';
 import 'react-responsive-modal/styles.css';
 import { useState } from 'react';
 import ReactQuill from "react-quill";
+import ReactTimeAgo from 'react-time-ago';
+import { useDispatch } from 'react-redux';
+import { addAnswer } from '../actions/answer';
 import "react-quill/dist/quill.snow.css"
 
-const Post = () => {
+const Post = ({ question }) => {
     const [ModalOpen, setModalOpen] = useState(false)
     const handleClose = () => setModalOpen(false);
-    const handleOpen = () => setModalOpen(true);
+    const handleOpen = () => setModalOpen(true)
+    const [answer, setAnswer] = useState("")
+    const dispatch = useDispatch()
 
+    console.log(question)
 
+    function LastSeen({ date }) {
+        return (
+            <div>
+                <ReactTimeAgo date={date} locale="en-US" timeStyle="round" />
+            </div>
+        )
+    }
+
+    const handleAnswer = (value) => {
+        setAnswer(value)
+    }
+
+    const handleSubmit = () => {
+        if (question?._id && answer !== "") {
+            dispatch(addAnswer(answer, question?._id))
+            handleClose()
+        }
+    }
+    // console.log(answer)
     return (
         <div className='post'>
             <div className="post-info">
                 <Avatar />
                 <h4>User Name</h4>
-                <small>Timestamp</small>
+                <small><LastSeen date={question?.date} /></small>
             </div>
             <div className="post-body">
                 <div className="post-question">
-                    <p>This is a test question</p>
+                    <p>{question?.questionContent}</p>
                     <Button onClick={handleOpen} variant="outlined" size='small' className='post-btnAnswer' color='error'>Answer</Button>
 
                     <Modal
@@ -42,11 +67,13 @@ const Post = () => {
                             }
                         }}>
                         <div className="modal-question">
-                            <h1>This is test question.</h1>
-                            <p>Asked by {" "}<span className='name'>Username</span> on <span className='name'>timestamp</span></p>
+                            <h1>{question?.questionContent}</h1>
+                            <p>Asked by {" "}<span className='name'>Username</span> on <span className='name'>{new Date(question?.date).toLocaleString()}</span></p>
                         </div>
                         <div className="modal-answer">
-                            <ReactQuill placeholder='Enter your answer' />
+                            <ReactQuill placeholder='Enter your answer'
+                                value={answer}
+                                onChange={handleAnswer} />
                         </div>
                         <div className="p-modal-buttons">
                             <Button className='p-cancle-btn' size='small' variant="outlined" color="error" onClick={handleClose}>
@@ -55,10 +82,14 @@ const Post = () => {
                             <Button style={{
                                 backgroundColor: "black",
                                 borderRadius: "20px"
-                            }} size='large' variant="contained" type='submit' className='p-add-btn'>Add Question</Button>
+                            }} size='large' variant="contained" type='submit' className='p-add-btn'
+                                onClick={handleSubmit}>Add Answer</Button>
                         </div>
                     </Modal>
                 </div>
+                {
+                    <img src={question?.questionUrl} alt="question url" />
+                }
             </div>
             <div className="post-footer">
                 <div className="post-footerActions">
@@ -79,7 +110,7 @@ const Post = () => {
                 fontSize: "12px",
                 fontWeight: "bold",
                 margin: "10px 0"
-            }}>1 Answer</p>
+            }}>{question?.allAnswers.length} Answers</p>
             <div style={{
                 margin: "5px 0px 0px 0px",
                 padding: "5px,0px,0px,20px",

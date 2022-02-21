@@ -14,15 +14,18 @@ import Input from '@mui/material/Input';
 import { Modal } from 'react-responsive-modal';
 import 'react-responsive-modal/styles.css';
 import { useState } from 'react';
-
+import { useDispatch } from 'react-redux';
+import { addQuestion } from '../../actions/questions';
 import '../CssFolder/Quora-Navbar.css';
 
 
 const Navbar = () => {
     const [inputUrl, setinputUrl] = useState("")
     const [ModalOpen, setModalOpen] = useState(false)
+    const [question, setQuestion] = useState("");
     const handleClose = () => setModalOpen(false);
     const handleOpen = () => setModalOpen(true);
+    const dispatch = useDispatch()
 
     const Search = styled('div')(({ theme }) => ({
         position: 'relative',
@@ -65,6 +68,11 @@ const Navbar = () => {
             },
         },
     }));
+
+    const handleSubmit = () => {
+        dispatch(addQuestion(question, inputUrl))
+        handleClose()
+    }
 
     // const ariaLabel = { 'aria-label': 'description' };
     return (
@@ -119,7 +127,10 @@ const Navbar = () => {
                         </div>
                     </div>
                     <div className="modal-field">
-                        <Input type='text' placeholder="Write Your Question here" />
+                        <Input type='text' placeholder="Write Your Question here"
+                            value={question}
+                            onChange={(e) => setQuestion(e.target.value)}
+                        />
                         <div style={{
                             display: "flex",
                             flexDirection: "column"
@@ -141,7 +152,7 @@ const Navbar = () => {
                         <Button className='cancle-btn' size='small' variant="outlined" color="error" onClick={handleClose}>
                             Cancel
                         </Button>
-                        <Button style={{
+                        <Button onClick={handleSubmit} style={{
                             backgroundColor: "black",
                             borderRadius: "20px"
                         }} size='large' variant="contained" type='submit' className='add-btn'>Add Question</Button>
