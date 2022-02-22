@@ -13,6 +13,7 @@ import ReactQuill from "react-quill";
 import ReactTimeAgo from 'react-time-ago';
 import { useDispatch } from 'react-redux';
 import { addAnswer } from '../actions/answer';
+import ReactHtmlParser from 'html-react-parser';
 import "react-quill/dist/quill.snow.css"
 
 const Post = ({ question }) => {
@@ -22,7 +23,7 @@ const Post = ({ question }) => {
     const [answer, setAnswer] = useState("")
     const dispatch = useDispatch()
 
-    console.log(question)
+    // console.log(question)
 
     function LastSeen({ date }) {
         return (
@@ -33,6 +34,7 @@ const Post = ({ question }) => {
     }
 
     const handleAnswer = (value) => {
+        // console.log(value)
         setAnswer(value)
     }
 
@@ -88,7 +90,7 @@ const Post = ({ question }) => {
                     </Modal>
                 </div>
                 {
-                    <img src={question?.questionUrl} alt="question url" />
+                    question.questionUrl !== "" && <img src={question?.questionUrl} alt="question url" />
                 }
             </div>
             <div className="post-footer">
@@ -116,36 +118,42 @@ const Post = ({ question }) => {
                 padding: "5px,0px,0px,20px",
                 borderTop: "1px solid lightgray"
             }} className="post-answer">
-                <div style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    width: "100%",
-                    padding: "10px 5px",
-                    borderTop: "1px solid lightgray"
-                }} className="post-answerContainer">
-                    <div style={{
 
-                        display: "flex",
-                        alignItems: "center",
-                        marginBottom: "10px",
-                        fontSize: "12px",
-                        fontWeight: "600",
-                        color: "#888"
-                    }} className="post-answered">
-                        <Avatar />
-                        <div className="post-info">
-                            <p style={{
-                                marginLeft: "10px"
-                            }}>Username</p>
-                            <p style={{
-                                marginLeft: "10px"
-                            }}>Timestamp</p>
-                        </div>
-                    </div>
-                    <div className="post-answer">
-                        this is test answer
-                    </div>
-                </div>
+                {
+                    question?.allAnswers?.map(answer =>
+                        <>
+                            <div style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                width: "100%",
+                                padding: "8px 5px",
+                                borderTop: "1px solid lightgray"
+                            }} className="post-answerContainer">
+                                <div style={{
+
+                                    display: "flex",
+                                    alignItems: "center",
+                                    // marginBottom: "0px",
+                                    fontSize: "12px",
+                                    fontWeight: "600",
+                                    color: "#888"
+                                }} className="post-answered">
+                                    <Avatar />
+                                    <div className="post-info">
+                                        <p style={{
+                                            marginLeft: "10px"
+                                        }}>Username</p>
+                                        <p style={{
+                                            marginLeft: "10px"
+                                        }}><LastSeen date={answer?.date} /></p>
+                                    </div>
+                                </div>
+                                <div className="post-answer">
+                                    {ReactHtmlParser(answer?.answerContent)}
+                                </div>
+                            </div>
+                        </>)
+                }
             </div>
         </div>
     );

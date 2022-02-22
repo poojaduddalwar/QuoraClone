@@ -10,9 +10,14 @@ export const addQuestion = (questionContent, questionUrl) => async (dispatch) =>
         })
         console.log(res.data)
         const { question, message } = res.data
+        function refresh() {
+            window.location.href = '/';
+            console.log("done")
+        }
         if (question) {
             toast.success(message)
-            window.location.href = '/';
+            setTimeout(refresh, 1000)
+            // window.location.href = '/';
             dispatch({
                 type: "ADD_QUESTION",
                 payload: { question }
