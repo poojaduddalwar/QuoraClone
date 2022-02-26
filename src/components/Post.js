@@ -8,12 +8,13 @@ import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import { Modal } from 'react-responsive-modal';
 import 'react-responsive-modal/styles.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ReactQuill from "react-quill";
 import ReactTimeAgo from 'react-time-ago';
 import { useDispatch } from 'react-redux';
 import { addAnswer } from '../actions/answer';
 import ReactHtmlParser from 'html-react-parser';
+import axios from 'axios';
 import "react-quill/dist/quill.snow.css"
 
 const Post = ({ question }) => {
@@ -21,9 +22,10 @@ const Post = ({ question }) => {
     const handleClose = () => setModalOpen(false);
     const handleOpen = () => setModalOpen(true)
     const [answer, setAnswer] = useState("")
+    const [newUser, setNewUser] = useState([])
     const dispatch = useDispatch()
 
-    // console.log(question)
+    console.log(question)
 
     function LastSeen({ date }) {
         return (
@@ -45,11 +47,24 @@ const Post = ({ question }) => {
         }
     }
     // console.log(answer)
+
+    const getUser = async () => {
+        const res = await axios.get('http://localhost:8080/api/v1/auth/users')
+        // console.log(res.data)
+        const { users } = res.data
+        const fuser = users.find(user => user._id === question.users)
+        console.log(fuser)
+        setNewUser(fuser)
+    }
+
+    useEffect(() => {
+        getUser()
+    }, [])
     return (
         <div className='post'>
             <div className="post-info">
                 <Avatar />
-                <h4>User Name</h4>
+                <h4>{newUser?.firstName}  {newUser?.lastName}</h4>
                 <small><LastSeen date={question?.date} /></small>
             </div>
             <div className="post-body">

@@ -9,6 +9,8 @@ import { Avatar, Button } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import Input from '@mui/material/Input';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 // import CloseIcon from '@mui/icons-material/Close';
 // // import { borders } from '@mui/system';
 import { Modal } from 'react-responsive-modal';
@@ -16,7 +18,21 @@ import 'react-responsive-modal/styles.css';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addQuestion } from '../../actions/questions';
+import { logoutUser } from '../../actions/auth';
 import '../CssFolder/Quora-Navbar.css';
+
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+};
+
 
 
 const Navbar = () => {
@@ -26,6 +42,9 @@ const Navbar = () => {
     const handleClose = () => setModalOpen(false);
     const handleOpen = () => setModalOpen(true);
     const dispatch = useDispatch()
+    const [open, setOpen] = useState(false);
+    const handleOpenProfileModel = () => setOpen(true);
+    const handleCloseProfileModel = () => setOpen(false);
 
     const Search = styled('div')(({ theme }) => ({
         position: 'relative',
@@ -74,6 +93,10 @@ const Navbar = () => {
         handleClose()
     }
 
+    const handleLogout = () => {
+        dispatch(logoutUser())
+    }
+
     // const ariaLabel = { 'aria-label': 'description' };
     return (
         <div className="qnavbar">
@@ -105,7 +128,7 @@ const Navbar = () => {
                 </Search>
 
                 <div className="qnavbar-profileImg">
-                    <Avatar />
+                    <Avatar onClick={handleOpenProfileModel} />
                 </div>
                 <Button className='qnavbar-profileImg-btn' onClick={handleOpen} variant='contained' sx={{ borderRadius: 16, bgcolor: 'error.main' }}>Add Question</Button>
 
@@ -157,6 +180,25 @@ const Navbar = () => {
                             borderRadius: "20px"
                         }} size='large' variant="contained" type='submit' className='add-btn'>Add Question</Button>
                     </div>
+                </Modal>
+
+                <Modal
+                    open={open}
+                    onClose={handleCloseProfileModel}
+                >
+                    <Box sx={style}>
+                        <Typography id="modal-modal-title" variant="h6" component="h2">
+                            <h4 style={{ fontSize: "30px", color: "red" }}>Do you really want to Logout ?</h4>
+                        </Typography>
+                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                            <Button variant="contained" color="success" style={{ marginRight: "20px" }} onClick={handleLogout}>
+                                LOGOUT
+                            </Button>
+                            <Button variant="outlined" color="error" onClick={handleCloseProfileModel}>
+                                CANCLE
+                            </Button>
+                        </Typography>
+                    </Box>
                 </Modal>
             </div>
 
