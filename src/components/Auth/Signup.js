@@ -70,7 +70,7 @@ export default function SignUp() {
     const { signup } = useSelector(state => state.authReducer)
     // console.log(signup)
     if (signup && signup === true) {
-        navigate('/login')
+        navigate('/')
     }
 
     return (
