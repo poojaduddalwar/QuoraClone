@@ -13,9 +13,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 // import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Link as routerLink } from 'react-router-dom';
+import { Link as routerLink, useNavigate } from 'react-router-dom';
 // import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { signupUser } from '../../actions/auth';
 
 function Copyright(props) {
