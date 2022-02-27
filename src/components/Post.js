@@ -25,7 +25,7 @@ const Post = ({ question }) => {
     const [newUser, setNewUser] = useState([])
     const dispatch = useDispatch()
 
-    console.log(question)
+    // console.log(question)
 
     function LastSeen({ date }) {
         return (
@@ -49,11 +49,11 @@ const Post = ({ question }) => {
     // console.log(answer)
 
     const getUser = async () => {
-        const res = await axios.get('http://localhost:8080/api/v1/auth/users')
+        const res = await axios.get('https://pd-quora-clone.herokuapp.com/api/v1/auth/users')
         // console.log(res.data)
         const { users } = res.data
         const fuser = users.find(user => user._id === question.users)
-        console.log(fuser)
+        // console.log(fuser)
         setNewUser(fuser)
     }
 

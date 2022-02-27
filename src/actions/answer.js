@@ -4,11 +4,11 @@ import axios from 'axios'
 export const addAnswer = (answerContent, question) => async (dispatch) => {
 
     try {
-        const base_Url = 'http://localhost:8080'
+        const base_Url = 'https://pd-quora-clone.herokuapp.com'
         const res = await axios.post(`${base_Url}/api/v1/answer/add`, {
             answerContent, question
         })
-        console.log(res.data)
+        // console.log(res.data)
         const { answer, message } = res.data
         function refresh() {
             window.location.href = '/';
@@ -29,7 +29,7 @@ export const addAnswer = (answerContent, question) => async (dispatch) => {
             })
         }
     } catch (error) {
-        console.log(error.message)
+        // console.log(error.message)
         toast.error(error.message)
     }
 };

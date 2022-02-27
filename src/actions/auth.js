@@ -25,7 +25,7 @@ export const signupUser = (email, firstName, lastName, password) => async (dispa
             })
         }
     } catch (error) {
-        console.log(error.message)
+        // console.log(error.message)
         toast.error(error.message)
     }
 };
@@ -33,11 +33,11 @@ export const signupUser = (email, firstName, lastName, password) => async (dispa
 export const loginUser = (email, password) => async (dispatch) => {
 
     try {
-        const base_Url = 'http://localhost:8080'
+        const base_Url = 'https://pd-quora-clone.herokuapp.com'
         const res = await axios.post(`${base_Url}/api/v1/auth/login`, {
             email, password
         })
-        console.log(res.data)
+        // console.log(res.data)
         const { token, message } = res.data
         if (token) {
             toast.success("Login Success !")
@@ -57,7 +57,7 @@ export const loginUser = (email, password) => async (dispatch) => {
             })
         }
     } catch (error) {
-        console.log(error.message)
+        // console.log(error.message)
         toast.error(error.message)
     }
 };
@@ -84,7 +84,7 @@ export const logoutUser = () => async (dispatch) => {
         //     })
         // }
     } catch (error) {
-        console.log(error.message)
+        // console.log(error.message)
         toast.error(error.message)
     }
 };
