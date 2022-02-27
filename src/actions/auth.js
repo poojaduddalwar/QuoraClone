@@ -37,7 +37,7 @@ export const loginUser = (email, password) => async (dispatch) => {
         const res = await axios.post(`${base_Url}/api/v1/auth/login`, {
             email, password
         })
-        // console.log(res.data)
+        console.log(res.data)
         const { token, message } = res.data
         if (token) {
             toast.success("Login Success !")
