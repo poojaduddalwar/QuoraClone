@@ -63,6 +63,16 @@ export default function SignUp() {
         dispatch(signupUser(email, firstName, lastName, password))
     };
 
+    //check to redirect the user once it has signed up
+
+    const navigate = useNavigate()
+
+    const { signup } = useSelector(state => state.authReducer)
+    // console.log(signup)
+    if (signup && signup === true) {
+        navigate('/login')
+    }
+
     return (
         <ThemeProvider theme={theme}>
             <Grid container component="main" sx={{ height: '100vh' }}>
