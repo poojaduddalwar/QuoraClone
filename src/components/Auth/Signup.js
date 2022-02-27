@@ -59,7 +59,7 @@ export default function SignUp() {
         // setPassword(password)
         // setfirstName(firstName)
         // setlastName(lastName)
-        console.log({ email, firstName, lastName, password });
+        // console.log({ email, firstName, lastName, password });
         dispatch(signupUser(email, firstName, lastName, password))
     };
 
