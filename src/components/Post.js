@@ -9,7 +9,7 @@ import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import { Modal } from 'react-responsive-modal';
 import 'react-responsive-modal/styles.css';
 import { useState, useEffect } from 'react';
-import ReactQuill from "react-quill";
+import ReactQuill from 'react-quill'; 
 import ReactTimeAgo from 'react-time-ago';
 import { useDispatch } from 'react-redux';
 import { addAnswer } from '../actions/answer';
@@ -49,7 +49,7 @@ const Post = ({ question }) => {
     // console.log(answer)
 
     const getUser = async () => {
-        const res = await axios.get('https://pd-quora-clone.herokuapp.com/api/v1/auth/users')
+        const res = await axios.get('https://quora-backend-w2zy.onrender.com/api/v1/auth/users')
         // console.log(res.data)
         const { users } = res.data
         const fuser = users.find(user => user._id === question.users)

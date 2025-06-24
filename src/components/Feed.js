@@ -9,7 +9,7 @@ const Feed = () => {
     const [questions, setQuestions] = useState([])
     // const dispatch = useDispatch()
     const getQuestions = async () => {
-        const res = await axios.get('https://pd-quora-clone.herokuapp.com/api/v1/question/all')
+        const res = await axios.get('https://quora-backend-w2zy.onrender.com/api/v1/question/all')
         // console.log(res.data.question.reverse())
         const { question } = res.data
         setQuestions(question.reverse())

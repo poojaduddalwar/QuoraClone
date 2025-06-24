@@ -4,7 +4,7 @@ import axios from 'axios'
 export const addAnswer = (answerContent, question) => async (dispatch) => {
 
     try {
-        const base_Url = 'https://pd-quora-clone.herokuapp.com'
+        const base_Url = 'https://quora-backend-w2zy.onrender.com'
         const res = await axios.post(`${base_Url}/api/v1/answer/add`, {
             answerContent, question
         })

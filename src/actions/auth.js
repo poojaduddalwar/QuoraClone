@@ -4,7 +4,7 @@ import axios from 'axios'
 export const signupUser = (email, firstName, lastName, password) => async (dispatch) => {
 
     try {
-        const base_Url = 'https://pd-quora-clone.herokuapp.com'
+        const base_Url = 'https://quora-backend-w2zy.onrender.com'
         const res = await axios.post(`${base_Url}/api/v1/auth/signup`, {
             email, firstName, lastName, password
         })
@@ -33,7 +33,7 @@ export const signupUser = (email, firstName, lastName, password) => async (dispa
 export const loginUser = (email, password) => async (dispatch) => {
 
     try {
-        const base_Url = 'https://pd-quora-clone.herokuapp.com'
+        const base_Url = 'https://quora-backend-w2zy.onrender.com'
         const res = await axios.post(`${base_Url}/api/v1/auth/login`, {
             email, password
         })
